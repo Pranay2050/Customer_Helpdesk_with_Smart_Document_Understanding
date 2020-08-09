@@ -1,0 +1,220 @@
+[
+    {
+        "id": "41dc855f.a0482c",
+        "type": "tab",
+        "label": "Watson Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3bd27bc7.f22214",
+        "type": "function",
+        "z": "41dc855f.a0482c",
+        "name": "",
+        "func": "msg.payload=msg.payload.input;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 357,
+        "y": 370.20001220703125,
+        "wires": [
+            [
+                "aa82b19c.b7196",
+                "ccd9123c.1765c"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "f96c0ec.20702f",
+        "type": "function",
+        "z": "41dc855f.a0482c",
+        "name": "bot",
+        "func": "var message = \"\";\n\nif(msg.payload.intents[0].intent == \"device_operation\"){\n    for(var i in msg.payload.context.webhook_result_1.passages){\n        message = message + msg.payload.context.webhook_result_1.passages[i].passage_text + \"\\n\";\n    }\n    \n    msg.payload = message;\n}\n\nelse\nmsg.payload=msg.payload.output.text[0];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 575,
+        "y": 360,
+        "wires": [
+            [
+                "920c034c.ff388",
+                "85678dc6.f2d36"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "920c034c.ff388",
+        "type": "debug",
+        "z": "41dc855f.a0482c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 672.600058555603,
+        "y": 439.20001888275146,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "5fd4ff85.3d109",
+        "type": "inject",
+        "z": "41dc855f.a0482c",
+        "name": "",
+        "topic": "hi",
+        "payload": "how to setup wifi?",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 199.60000610351562,
+        "y": 256.4000015258789,
+        "wires": [
+            [
+                "3bd27bc7.f22214"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1f1b99a6.66eb86",
+        "type": "ui_form",
+        "z": "41dc855f.a0482c",
+        "name": "",
+        "label": "",
+        "group": "2d8b4285.8eaf4e",
+        "order": 1,
+        "width": 16,
+        "height": 2,
+        "options": [
+            {
+                "label": "enter text here",
+                "value": "input",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "input": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "x": 196,
+        "y": 383.20001220703125,
+        "wires": [
+            [
+                "3bd27bc7.f22214"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "7ba9d477.517a8c",
+        "type": "ui_text",
+        "z": "41dc855f.a0482c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": -13,
+        "y": 397,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "aa82b19c.b7196",
+        "type": "watson-conversation-v1",
+        "z": "41dc855f.a0482c",
+        "name": "chatbot",
+        "workspaceid": "d0bac28c-f5be-47d1-b707-c9cc76c216a4",
+        "multiuser": false,
+        "context": true,
+        "empty-payload": true,
+        "service-endpoint": "https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/fe3c27e3-a743-414f-9160-2dc4db6908d9",
+        "timeout": "",
+        "optout-learning": false,
+        "x": 460,
+        "y": 300,
+        "wires": [
+            [
+                "f96c0ec.20702f",
+                "7c97ffee.819d"
+            ]
+        ]
+    },
+    {
+        "id": "ccd9123c.1765c",
+        "type": "ui_text",
+        "z": "41dc855f.a0482c",
+        "group": "2d8b4285.8eaf4e",
+        "order": 2,
+        "width": 16,
+        "height": 1,
+        "name": "User Dialouge",
+        "label": "You",
+        "format": "{{msg.payload}}",
+        "layout": "row-right",
+        "x": 430,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "85678dc6.f2d36",
+        "type": "ui_text",
+        "z": "41dc855f.a0482c",
+        "group": "2d8b4285.8eaf4e",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Chatbot Dialouge",
+        "label": "Chatbot",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 690,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7c97ffee.819d",
+        "type": "debug",
+        "z": "41dc855f.a0482c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 420,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "2d8b4285.8eaf4e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "a5fb7e71.d3336",
+        "order": 1,
+        "disp": true,
+        "width": "16",
+        "collapse": false
+    },
+    {
+        "id": "a5fb7e71.d3336",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Chatbot",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
